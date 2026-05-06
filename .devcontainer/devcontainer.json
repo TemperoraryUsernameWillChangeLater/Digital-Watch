@@ -10,7 +10,8 @@
                 "eirikpre.systemverilog",
                 "ms-python.python",
                 "lramseyer.vaporview",
-                "charliermarsh.ruff"
+                "charliermarsh.ruff",
+                "oderwat.indent-rainbow"
             ],
             "settings": {
                 "python.defaultInterpreterPath": "/opt/venv/bin/python",

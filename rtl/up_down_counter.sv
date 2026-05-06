@@ -7,7 +7,7 @@ module up_down_counter #(
     input logic clk,
     input logic enable,
     input logic up,
-    output logic [WIDTH-1:0] count
+    output logic [WIDTH - 1:0] count
 );
 
   localparam logic [WIDTH-1:0] Max = WIDTH'(MAX);
