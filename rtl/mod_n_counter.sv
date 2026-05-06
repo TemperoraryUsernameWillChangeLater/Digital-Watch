@@ -7,7 +7,7 @@ module mod_n_counter #(
     input logic clk,
     input logic rst,
     input logic enable,
-    output logic [WIDTH-1:0] count = 0
+    output logic [WIDTH - 1:0] count = 0
 );
 
 localparam logic [WIDTH-1:0] Max = WIDTH'(N - 1);
