@@ -25,7 +25,8 @@ module seven_segment #(
   always_comb begin
     if (blank) begin
       segments_active_high = 7'b0000000;
-    end else begin
+    end
+    else begin
       unique case (digit)
         4'h0: segments_active_high = 7'b0111111;  // a,b,c,d,e,f
         4'h1: segments_active_high = 7'b0000110;  // b,c
