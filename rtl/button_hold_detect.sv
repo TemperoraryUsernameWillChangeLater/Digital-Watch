@@ -18,7 +18,7 @@ module button_hold_detect #(
     always_ff @(posedge clk) begin
         if (!button) begin
             held <= '0;
-        end else if (count == CountMax - 1) begin
+        end else if (count == CountWidth'(CountMax - 1)) begin
             held <= '1;
         end
     end
