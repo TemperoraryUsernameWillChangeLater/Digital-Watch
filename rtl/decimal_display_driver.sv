@@ -17,55 +17,55 @@
 `timescale 1ns / 1ps
 
 module decimal_display_driver (
-// Decimal values to be displayed (range: 0-99)
-// value0 -> HEX1 (tens) and HEX0 (ones)
-// value1 -> HEX3 (tens) and HEX2 (ones)
-// value2 -> HEX5 (tens) and HEX4 (ones)
-input logic [6:0] value0 ,
-input logic [6:0] value1 ,
-input logic [6:0] value2 ,
+    // Decimal values to be displayed (range: 0-99)
+    // value0 -> HEX1 (tens) and HEX0 (ones)
+    // value1 -> HEX3 (tens) and HEX2 (ones)
+    // value2 -> HEX5 (tens) and HEX4 (ones)
+    input logic [6:0] value0 ,
+    input logic [6:0] value1 ,
+    input logic [6:0] value2 ,
 
-// Blanking controls for each decimal value.
-// When asserted , both digits of the value are blanked.
-input logic blank0 ,
-input logic blank1 ,
-input logic blank2 ,
+    // Blanking controls for each decimal value.
+    // When asserted , both digits of the value are blanked.
+    input logic blank0 ,
+    input logic blank1 ,
+    input logic blank2 ,
 
-// DE1 -SoC seven -segment display outputs.
-// Active -low segments: [g,f,e,d,c,b,a]
-output logic [6:0] HEX0 ,
-output logic [6:0] HEX1 ,
-output logic [6:0] HEX2 ,
-output logic [6:0] HEX3 ,
-output logic [6:0] HEX4 ,
-output logic [6:0] HEX5
-);
+    // DE1 -SoC seven -segment display outputs.
+    // Active -low segments: [g,f,e,d,c,b,a]
+    output logic [6:0] HEX0 ,
+    output logic [6:0] HEX1 ,
+    output logic [6:0] HEX2 ,
+    output logic [6:0] HEX3 ,
+    output logic [6:0] HEX4 ,
+    output logic [6:0] HEX5
+    );
 
-// Pack scalar ports into arrays for use in the generate loop.
-// value_a[i] drives HEX(2i+1) (tens) and HEX(2i) (ones).
-logic [6:0] value_a [1];
-assign value_a  = value0;
-assign value_a [2] = value1;
-assign value_a [3] = value2;
+    // Pack scalar ports into arrays for use in the generate loop.
+    // value_a[i] drives HEX(2i+1) (tens) and HEX(2i) (ones).
+    logic [6:0] value_a [1];
+    assign value_a  = value0;
+    assign value_a [2] = value1;
+    assign value_a [3] = value2;
 
-logic blank_a [1];
-assign blank_a  = blank0;
-assign blank_a [2] = blank1;
-assign blank_a [3] = blank2;
+    logic blank_a [1];
+    assign blank_a  = blank0;
+    assign blank_a [2] = blank1;
+    assign blank_a [3] = blank2;
 
-logic [6:0] hex_a [4];
-assign HEX0 = hex_a ;
-assign HEX1 = hex_a [2];
-assign HEX2 = hex_a [3];
-assign HEX3 = hex_a [1];
-assign HEX4 = hex_a [5];
-assign HEX5 = hex_a [6];
+    logic [6:0] hex_a [4];
+    assign HEX0 = hex_a ;
+    assign HEX1 = hex_a [2];
+    assign HEX2 = hex_a [3];
+    assign HEX3 = hex_a [1];
+    assign HEX4 = hex_a [5];
+    assign HEX5 = hex_a [6];
 
-genvar i;
-generate
-for (i = 0; i < 3; i = i + 1) begin : g_digit_pair
-// Put your code here
-end
-endgenerate
+    genvar i;
+    generate
+        for (i = 0; i < 3; i = i + 1) begin : g_digit_pair
+            binary_to_bcd
+        end
+    endgenerate
 
 endmodule
