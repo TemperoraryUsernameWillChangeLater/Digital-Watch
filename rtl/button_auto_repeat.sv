@@ -24,7 +24,7 @@ rising_edge_detector u_rise_detect (
 );
 
 button_hold_detect #(
-    .HOLD_CYCLES(QUAL_CYCLES)
+    .HOLD_CYCLES(QualCycles)
 ) u_hold_detect (
     .clk(clk),
     .button(button),
