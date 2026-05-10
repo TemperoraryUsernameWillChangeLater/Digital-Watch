@@ -6,9 +6,9 @@ module rising_edge_detector (
     output logic rise
 );
 
-logic prev = 0;
-logic next_prev;
-always_ff @(posedge clk) prev <= next_prev;
-assign next_prev = sig_in;
-assign rise = (!prev && sig_in);
+    logic prev = 0;
+    logic next_prev;
+    always_ff @(posedge clk) prev <= next_prev;
+    assign next_prev = sig_in;
+    assign rise = (!prev && sig_in);
 endmodule

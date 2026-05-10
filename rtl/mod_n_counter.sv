@@ -11,20 +11,20 @@ module mod_n_counter #(
     output logic [WIDTH - 1:0] count = 0
 );
 
-localparam logic [WIDTH-1:0] Max = WIDTH'(N - 1);
-logic [WIDTH-1:0] next_count;
+    localparam logic [WIDTH-1:0] Max = WIDTH'(N - 1);
+    logic [WIDTH-1:0] next_count;
 
-always_ff @(posedge clk) begin
-    if (rst) count <= '0;
-    else if (enable) count <= next_count;
-end
-
-always_comb begin
-    if (count == Max) begin
-        next_count = '0;
-    end else begin
-        next_count = count + WIDTH'(1);
+    always_ff @(posedge clk) begin
+        if (rst) count <= '0;
+        else if (enable) count <= next_count;
     end
-end
+
+    always_comb begin
+        if (count == Max) begin
+            next_count = '0;
+        end else begin
+            next_count = count + WIDTH'(1);
+        end
+    end
 
 endmodule
