@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module button_auto_repeat #(
+module button_Auto_Repeat #(
     parameter int HOLD_CYCLES = 50_000_000,
     parameter int REPEAT_CYCLES = 5_000_000
 ) (
@@ -21,20 +21,20 @@ rising_edge_detector u_rise_detect (
     .rise(rise)
 );
 button_hold_detect #(
-    //
+    .HOLD_CYCLES(HOLD_CYCLES)
 ) (
-    //
-    //
-    //
+    .clk(clk),
+    .button(button),
+    .held(held)
 );
 
 
 restartable_rate_generator #(
-    //
+    .CYCLE_COUNT(REPEAT_CYCLES)
 ) (
-    //
-    //
-    //
+    .clk(clk),
+    .run(held),
+    .tick(pulse_train)
 );
 
 endmodule
