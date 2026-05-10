@@ -1,4 +1,5 @@
 `timescale 1ns / 1ps
+// A Moore FSM acting as a timing heartbeat by outputting a single-cycle tick every CYCLE_COUNT clock cycles.
 
 module restartable_rate_generator #(
     parameter int CYCLE_COUNT = 2

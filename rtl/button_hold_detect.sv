@@ -8,12 +8,14 @@ input logic button ,
 output logic held
 );
 
-localparam int CountMax =  ;
+localparam int CountMax = HOLD_CYCLES;
 localparam int CountWidth = $clog2(CountMax + 1);
 
 logic count_rst;
 logic count_enable;
 logic [CountWidth -1:0] count;
+
+always_comb
 
 mod_n_counter #(
 .N(CountMax + 1),

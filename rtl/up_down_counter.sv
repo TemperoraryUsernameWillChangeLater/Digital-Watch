@@ -1,4 +1,5 @@
 `timescale 1ns / 1ps
+// A parameterised counter that increments or decrements based on an input signal and cleanly wraps between 0 and MAX.
 
 module up_down_counter #(
     parameter int MAX   = 2,

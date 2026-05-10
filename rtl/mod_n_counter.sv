@@ -1,4 +1,5 @@
 `timescale 1ns / 1ps
+// A basic counter that counts from 0 to N-1 and wraps back to zero, featuring a strict priority reset.
 
 module mod_n_counter #(
     parameter int N = 4,

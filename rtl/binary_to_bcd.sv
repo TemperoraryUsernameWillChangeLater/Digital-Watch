@@ -1,4 +1,5 @@
 `timescale 1ns / 1ps
+// Converts a 7-bit binary input representing 0-99 into two 4-bit BCD values for the tens and ones digits.
 
 module binary_to_bcd (
     input  logic [6:0] bin,   // binary input, 0-99
