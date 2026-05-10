@@ -97,8 +97,8 @@ module user_top_watch_v1 #(
     assign hours_inc = 1'b0;
     assign hours_dec = 1'b0;
 
-    assign minutes_tick = /* Put your code here */ ;
-    assign hours_tick = /* Put your code here */ ;
+    assign minutes_tick = (seconds == 6'd59) && seconds_tick;
+    assign hours_tick = (minutes == 6'd59) && minutes_tick;
 
     // Zero-extend counter values to display outputs
     assign hours_disp = {2'b0, hours};
