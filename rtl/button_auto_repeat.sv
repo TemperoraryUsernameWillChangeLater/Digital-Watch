@@ -13,7 +13,7 @@ logic rise;
 logic held;
 logic pulse_train;
 
-localparam int QUAL_CYCLES = HOLD_CYCLES - REPEAT_CYCLES + 1;
+localparam int QualCycles = HOLD_CYCLES - REPEAT_CYCLES + 1;
 
 assign pulse = rise | (button & pulse_train);
 
