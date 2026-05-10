@@ -28,6 +28,8 @@ module button_hold_detect #(
     always_comb begin
         if (count == CountMax) begin
             held = '1;
+        end else if (!button) begin
+            held = '0;
         end else begin
             held = '0;
         end
