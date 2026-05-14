@@ -15,7 +15,7 @@ module button_auto_repeat #(
 
     localparam int QualCycles = HOLD_CYCLES - REPEAT_CYCLES + 1;
 
-    assign pulse = rise | (button & pulse_train);
+    assign pulse = rise || (button && pulse_train);
 
     rising_edge_detector u_rise_detect (
         .clk(clk),
