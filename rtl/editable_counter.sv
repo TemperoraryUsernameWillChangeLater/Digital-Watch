@@ -5,7 +5,6 @@ module editable_counter #(
     parameter int WIDTH = 6
 ) (
     input logic clk,
-    input logic clr, // Why put this here?
     input logic tick,  // Count increments on tick when edit_mode is low
     input logic edit_mode,
     input logic inc,  // Count increments by one when edit_mode is high

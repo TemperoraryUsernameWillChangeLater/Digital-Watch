@@ -9,11 +9,13 @@ module pwm_generator #(
     output logic pwm_out
 );
 
-  logic [$clog2(PERIOD_CYCLES)-1:0] count;
+  localparam int COUNT_WIDTH = $clog2(PERIOD_CYCLES);
+  logic [COUNT_WIDTH-1:0] count;
+  wire  [COUNT_WIDTH-1:0] duty_count = DUTY_CYCLES[COUNT_WIDTH-1:0];
 
   mod_n_counter #(
       .N(PERIOD_CYCLES),     // Setting the count limit (Mod-10)
-      .WIDTH($clog2(PERIOD_CYCLES))   // Setting the bit-width to accommodate N-1
+      .WIDTH(COUNT_WIDTH)   // Setting the bit-width to accommodate N-1
   ) u_my_counter (
       .clk(clk),
       .rst(rst),
@@ -22,7 +24,7 @@ module pwm_generator #(
   );
 
   always_comb begin
-    if (count < DUTY_CYCLES) begin
+    if (count < duty_count) begin
       pwm_out = '1;
     end else begin
       pwm_out = '0;
