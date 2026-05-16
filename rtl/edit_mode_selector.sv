@@ -26,6 +26,10 @@
 
     logic armed;
     logic disarm;
+
+    // Disarm on the press that steps past the last mode
+    assign disarm = press && (count == 2'd2);
+
     arming_latch u_latch (
         .clk(clk),
         .arm(long_press),
@@ -36,6 +40,11 @@
     logic reset_counter;
     logic enable_counter;
     logic [1:0] count;
+
+    // Counter runs only while armed; resets when disarmed
+    assign enable_counter = armed && press;
+    assign reset_counter = !armed;
+
     mod_n_counter #(
         .N(3),
         .WIDTH(2)
@@ -45,13 +54,6 @@
         .enable(enable_counter),
         .count(count)
     );
-
-    // Counter runs only while armed; resets when disarmed
-    assign enable_counter = armed & press;
-    assign reset_counter = !armed;
-
-    // Disarm on the press that steps past the last mode
-    assign disarm = press & (count == 2'd2);
 
     // Output logic
     assign mode_enable = armed ? (3'b001 << count) : 3'b000;
