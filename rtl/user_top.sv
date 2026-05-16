@@ -35,9 +35,9 @@ module user_top #(
 
 assign led = clk ? sw : ~sw;
 
-assign blank_hours = button ;
-assign blank_minutes = button [1];
-assign blank_seconds = button [2];
+assign blank_hours = button[0];
+assign blank_minutes = button[1];
+assign blank_seconds = button[2];
 
 assign hours_disp = button [3] ? 7'd16 : 7'd7;
 assign minutes_disp = button [3] ? 7'd38 : 7'd23;
