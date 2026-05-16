@@ -136,20 +136,20 @@
     //
 
     button_auto_repeat #(
-        .HOLD_CYCLES  (CYCLES_PER_SECOND),
-        .REPEAT_CYCLES(CYCLES_PER_SECOND / 2)
+        .HOLD_CYCLES  (CYCLES_PER_SECOND / 2),
+        .REPEAT_CYCLES(CYCLES_PER_SECOND / 10)
     ) u_inc_button (
         .clk(clk),
-        .button(button[0]),
+        .button(button[1]),
         .pulse(inc_pulse)  //OUTPUT
     );
 
     button_auto_repeat #(
-        .HOLD_CYCLES  (CYCLES_PER_SECOND),
-        .REPEAT_CYCLES(CYCLES_PER_SECOND / 2)
+        .HOLD_CYCLES  (CYCLES_PER_SECOND / 2),
+        .REPEAT_CYCLES(CYCLES_PER_SECOND / 10)
     ) u_dec_button (
         .clk(clk),
-        .button(button[1]),
+        .button(button[0]),
         .pulse(dec_pulse)  //OUTPUT
     );
 
