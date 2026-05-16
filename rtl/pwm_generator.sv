@@ -10,10 +10,10 @@ module pwm_generator #(
 );
 
   localparam int COUNT_WIDTH = $clog2(PERIOD_CYCLES);
-  localparam int DUTY_WIDTH  = COUNT_WIDTH + 1;
+  localparam int DUTY_WIDTH = COUNT_WIDTH + 1;
   logic [COUNT_WIDTH-1:0] count;
-  wire  [DUTY_WIDTH-1:0] count_ext = {{(DUTY_WIDTH-COUNT_WIDTH){1'b0}}, count};
-  wire  [DUTY_WIDTH-1:0] duty_count = DUTY_CYCLES[DUTY_WIDTH-1:0];
+  wire  [ DUTY_WIDTH-1:0] count_ext = {{(DUTY_WIDTH - COUNT_WIDTH) {1'b0}}, count};
+  wire  [ DUTY_WIDTH-1:0] duty_count = DUTY_CYCLES[DUTY_WIDTH-1:0];
 
   mod_n_counter #(
       .N(PERIOD_CYCLES),     // Setting the count limit (Mod-10)
