@@ -13,7 +13,8 @@ assign inverted_key_n = ~key_n;
 //Shift register to simulate synchronizer
 always_ff @(posedge clk) begin
     shift1 <= inverted_key_n;
-    shift2 <= shift1;end
+    shift2 <= shift1;
+end
 
 assign key_sync = shift2;
 endmodule
