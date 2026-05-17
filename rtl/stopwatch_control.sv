@@ -2,40 +2,35 @@
 
 module stopwatch_control (
     input logic clk,
-    input logic rise_start_stop, // Button[0]
-    input logic rise_lap, // Button[1]
-    output logic counter_rst,
-    output logic counter_enable, /*High: The stopwatch is running || Low: stopwatch is stopped */
-    output logic lap_hold /*High: Display is frozen || Low: Display is live*/
+    input logic rise_start_stop,
+    input logic rise_lap,
+    output logic counter_rst = 1'b0,
+    output logic counter_enable = 1'b0,
+    output logic lap_hold = 1'b0
 );
 
-    logic [2: 0] state = {counter_rst, counter_enable, lap_hold};
-
-    logic [2: 0] next_state;
-
-    always_comb begin
-        if (rise_lap) begin
-            casez (state)
-                3'b?10 : next_state = 3'b011;
-                3'b?11 : next_state = 3'b010;
-                3'b?01 : next_state = 3'b000;
-                3'b?00 : next_state = 3'b100;
-                default: next_state = state;
-            endcase
-        end
-    end
+    logic next_counter_rst;
+    logic next_counter_enable;
+    logic next_lap_hold;
 
     always_ff @(posedge clk) begin
-        if (rise_start_stop) begin
-            casez (state)
-                3'b?00 : state <= 3'b001;
-                3'b?01 : state <= 3'b000;
-                3'b?10 : state <= 3'b101;
-                3'b?11 : state <= 3'b100;
-                default: state <= state;
-            endcase
-        end else begin
-            state <= next_state;
+        counter_rst <= next_counter_rst;
+        counter_enable <= next_counter_enable;
+        lap_hold <= next_lap_hold;
+    end
+
+    assign next_counter_rst = (rise_lap && !rise_start_stop && !counter_enable && !lap_hold);
+    assign next_counter_enable = (rise_start_stop && !rise_lap) ? !counter_enable : counter_enable;
+
+    always_comb begin
+        next_lap_hold = lap_hold;
+        if (rise_lap && !rise_start_stop) begin
+            if (counter_enable) begin
+                next_lap_hold = !lap_hold;
+            end else begin
+                next_lap_hold = 1'b0;
+            end
         end
     end
+
 endmodule
