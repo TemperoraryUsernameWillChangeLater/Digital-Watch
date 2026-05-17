@@ -2,13 +2,13 @@
 // A parameterised counter that increments or decrements based on an input signal and cleanly wraps between 0 and MAX.
 
 module up_down_counter #(
-    parameter int MAX   = 2,
-    parameter int WIDTH = 2
+  parameter int MAX   = 2,
+  parameter int WIDTH = 2
 ) (
-    input logic clk,
-    input logic enable,
-    input logic up,
-    output logic [WIDTH - 1:0] count
+  input logic clk,
+  input logic enable,
+  input logic up,
+  output logic [WIDTH - 1:0] count
 );
 
   localparam logic [WIDTH-1:0] Max = WIDTH'(MAX);

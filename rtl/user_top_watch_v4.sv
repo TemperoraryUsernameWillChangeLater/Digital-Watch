@@ -23,7 +23,7 @@
     logic seconds_dec;
     logic [5:0] seconds;
 
-    editable_counter #(
+    editable_counter #( // for counting seconds with a max of 59
         .N(60),
         .WIDTH(6)
     ) u_seconds (
@@ -41,7 +41,7 @@
     logic minutes_dec;
     logic [5:0] minutes;
 
-    editable_counter #(
+    editable_counter #( // for counting minutes with a max of 59
         .N(60),
         .WIDTH(6)
     ) u_minutes (
@@ -59,7 +59,7 @@
     logic hours_dec;
     logic [4:0] hours;
 
-    editable_counter #(
+    editable_counter #( // for counting hours with a max of 23
         .N(24),
         .WIDTH(5)
     ) u_hours (
@@ -71,12 +71,12 @@
         .count(hours)  // OUTPUT
     );
 
-    restartable_rate_generator #(
+    restartable_rate_generator #( // for generating a 1 Hz tick for the seconds counter
         .CYCLE_COUNT(CYCLES_PER_SECOND)
     ) u_divider_1_Hz (
-        .clk (clk),
-        .run (!(mode_enable[0] && button[3])),  // Only run the clock when we're in seconds edit mode and the button is held
-        .tick(seconds_tick)
+        .clk(clk),
+        .run (!(mode_enable[0] && button[3])),
+        .tick(seconds_tick) //OUTPUT
     );
 
     logic inc_pulse;
@@ -107,11 +107,11 @@
     // Mode Selection
     //--------------
     logic [2:0] mode_enable;
-    edit_mode_selector #(
+    edit_mode_selector #( // for selecting which part of the display to edit
         .HOLD_CYCLES(CYCLES_PER_SECOND)
     ) u_mode_selector (
-        .clk(clk),  // INPUT
-        .button(button[3]),  // INPUT
+        .clk(clk),
+        .button(button[3]),
         .mode_enable(mode_enable)  //OUTPUT
     );
 
@@ -122,8 +122,8 @@
         .PERIOD_CYCLES(CYCLES_PER_SECOND / 2),
         .DUTY_CYCLES  (CYCLES_PER_SECOND / 10)
     ) u_pwm_generator (
-        .clk(clk),  //INPUT
-        .rst(1'b0),  //INPUT
+        .clk(clk),
+        .rst(1'b0),
         .pwm_out(pwm_out)  //OUTPUT
     );
 
@@ -135,7 +135,7 @@
     // 7.15
     //
 
-    button_auto_repeat #(
+    button_auto_repeat #( // for generating pulses for incrementing and decrementing the counters when the buttons are held
         .HOLD_CYCLES  (CYCLES_PER_SECOND / 2),
         .REPEAT_CYCLES(CYCLES_PER_SECOND / 10)
     ) u_inc_button (
