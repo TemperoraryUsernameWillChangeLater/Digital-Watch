@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 module editable_countdown #(
-    parameter int MAX = 59,
+    parameter int MAX   = 59,
     parameter int WIDTH = 6
 ) (
     input logic clk,
@@ -14,14 +14,15 @@ module editable_countdown #(
     output logic borrow_out
 );
 
-        logic enable;
+    logic enable;
     logic up;
 
-    up_down_counter #(
+    up_down_counter_rst #(
         .MAX  (MAX),
         .WIDTH(WIDTH)
     ) u_counter (
         .clk(clk),
+        .rst(clr),
         .enable(enable),
         .up(up),
         .count(count)
@@ -29,9 +30,10 @@ module editable_countdown #(
 
     wire inc_event = edit_mode && inc && !dec;
     wire dec_event = edit_mode && dec && !inc;
-    wire tick_event = !edit_mode && tick;
+    wire tick_event = !edit_mode && tick && !clr;
 
-    assign up = inc_event || tick_event;
+    assign up = inc_event;
     assign enable = inc_event || tick_event || dec_event;
+    assign borrow_out = tick_event && (count == '0);
 
 endmodule
