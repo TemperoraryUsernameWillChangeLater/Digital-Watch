@@ -16,7 +16,7 @@
 // ------------------------------------------------------------------
 `timescale 1ns / 1ps
 
-module user_top #(
+module user_top_stopwatch_v1#(
     /* verilator lint_off UNUSEDPARAM */
     parameter int CYCLES_PER_SECOND = 50_000_000
     /* verilator lint_on UNUSEDPARAM */
@@ -43,6 +43,45 @@ module user_top #(
     assign minutes_disp = button[3] ? 7'd38 : 7'd23;
     assign seconds_disp = button[3] ? 7'd59 : 7'd45;
 
-  // Put your code here (for future designs based on this template)
+    logic rise_start_stop, rise_lap, rise_start_stop, lap_hold, counter_rst, counter_enable;
 
+    rising_edge_detector u_red_start_stop (
+        .clk(clk),
+        .in(button[0]),
+        .rise(rise_start_stop)
+    );
+    rising_edge_detector u_red_lap (
+        .clk(clk),
+        .in(button[1]),
+        .rise(rise_lap)
+    );
+
+    stopwatch_control u_control (
+        .clk(clk),
+        .rise_start_stop(rise_start_stop),
+        .rise_lap(rise_lap),
+        .counter_rst(counter_rst),
+        .counter_enable(counter_enable),
+        .lap_hold(lap_hold)
+    );
+    stopwatch_counter #(
+        .CYCLES_PER_SECOND(CYCLES_PER_SECOND)
+    ) u_counter (
+        .clk(clk),
+        .counter_rst(counter_rst),
+        .counter_enable(counter_enable),
+        .lap_hold(lap_hold),
+        .hours_disp(hours_disp),
+        .minutes_disp(minutes_disp),
+        .seconds_disp(seconds_disp)
+    );
+
+    snapshot_mux #(
+        .WIDTH(20)
+    ) u_snapshot_mux (
+        .clk(clk),
+        .hold(lap_hold),
+        .d({hours_disp, minutes_disp, seconds_disp}),
+        .q({hours_disp, minutes_disp, seconds_disp})
+    );
 endmodule
